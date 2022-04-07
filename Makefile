@@ -1,7 +1,12 @@
+DENO=deno run --no-remote --import-map=vendor/import_map.json
+
 .PHONY: read-file
 read-file:
-	run --allow-read read-file.ts ./run-net.ts
+	$(DENO) --allow-read read-file.ts ./run-net.ts
 
 .PHONY: run-net
 run-net:
-	deno run --allow-net run-net.ts https://blockclubchicago.org/feed
+	$(DENO) --allow-net run-net.ts https://blockclubchicago.org/feed
+
+vendor:
+	deno vendor run-net.ts read-file.ts
